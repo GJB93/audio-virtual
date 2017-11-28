@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-/** References: 
+/** Used Tutorial References: 
  * https://youtu.be/wtXirrO-iNA
  * https://youtu.be/4Av788P9stk
  * 
@@ -148,6 +148,11 @@ public class SoundVisual : MonoBehaviour
         pitchValue = GetPitchValue(spectrum);
     }
 
+    /**
+     * The following three functions, (GetRmsValue, GetDBValue and GetPitchValue) 
+     * are written with reference to code snippets found at this link: 
+     * https://answers.unity.com/questions/157940/getoutputdata-and-getspectrumdata-they-represent-t.html
+    **/
     private float GetRmsValue(float[] samples)
     {
         float sum = 0;
@@ -155,20 +160,12 @@ public class SoundVisual : MonoBehaviour
         {
             sum += samples[i] * samples[i];
         }
-        // Debug.Log("RMSValue is " + Mathf.Sqrt(sum / SAMPLE_SIZE));
         return Mathf.Sqrt(sum / SAMPLE_SIZE);
     }
 
     private float GetDBValue(float measuredVoltage, float referenceVoltage)
     {
-        // Debug.Log("dbValue is " + (20 * Mathf.Log10(rmsValue / 0.1f)));
         return 20 * Mathf.Log10(rmsValue / 0.1f);
-    }
-
-    private float GetVoltageRatio(float decibelValue)
-    {
-        Debug.Log("VoltageRatio is " + (Mathf.Pow(10, (decibelValue / 20))));
-        return Mathf.Pow(10, (decibelValue/20));
     }
 
     private float GetPitchValue(float[] spectrum)
@@ -193,6 +190,15 @@ public class SoundVisual : MonoBehaviour
         }
 
         return freqN * hzPerInterval;
+    }
+    /**
+     *  End of code snippet https://answers.unity.com/questions/157940/getoutputdata-and-getspectrumdata-they-represent-t.html
+    **/
+
+    private float GetVoltageRatio(float decibelValue)
+    {
+        Debug.Log("VoltageRatio is " + (Mathf.Pow(10, (decibelValue / 20))));
+        return Mathf.Pow(10, (decibelValue / 20));
     }
 
     private List<float> GetBandAverages(float[] spectrum)
